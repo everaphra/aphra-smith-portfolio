@@ -2,6 +2,8 @@
 #install.packages("striprtf")
 install.packages("ggplot2")
 #install.packages("Synth")
+install.packages("httr")
+install.packages("jsonlite")
 
 #read packages
 library(tidyr)
@@ -10,8 +12,24 @@ library(striprtf)
 library(ggplot2)
 library(stringr)
 library(Synth)
+library(httr)
+library(jsonlite)
 
 setwd("/Users/aphrasmith/Documents/Personal/Masters/Development economics/guyana_project")
+
+# Replace with the actual API endpoint
+url <- "https://data.un.org/ws/rest/data/UIS,DF_UNData_UIS,1.1/all/ALL/?detail=full&dimensionAtObservation=TIME_PERIOD"
+
+# Send GET request
+response <- GET(url)
+
+# Check the status code
+if (status_code(response) == 200) {
+  # Parse JSON content
+  data <- content(response, "text")
+  parsed_data <- fromJSON(data)
+
+
 
 latin_america <- read.csv(".data/latin_american_iso_codes.csv", header = FALSE)
 
